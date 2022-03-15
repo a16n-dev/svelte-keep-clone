@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 
-  export let spacing = 10;
-  export let itemWidth = 200;
+  export let spacing = 16;
+  export let itemWidth = 240;
 
   let root: HTMLDivElement;
   let container: HTMLDivElement;
@@ -39,6 +39,7 @@
   $: positionItems(colCount);
 
   onMount(handleResize);
+  afterUpdate(() => positionItems(colCount));
 </script>
 
 <svelte:window on:resize={handleResize} />
