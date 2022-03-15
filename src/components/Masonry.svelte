@@ -4,7 +4,7 @@
   export let spacing = 16;
   export let itemWidth = 240;
 
-  let root: HTMLDivElement;
+  // let root: HTMLDivElement;
   let container: HTMLDivElement;
 
   let colCount: number;
@@ -26,12 +26,14 @@
         // Increment the height of that column
         const height = child.getBoundingClientRect().height;
         columnHeights[columnIndex] += height + spacing;
+
+        container.style.height = `${Math.max(...columnHeights)}px`;
       }
     });
   };
 
   const handleResize = () => {
-    const width = root.getBoundingClientRect().width;
+    const width = container.parentElement.getBoundingClientRect().width;
     colCount = Math.floor(width / (itemWidth + spacing));
     container.style.width = `${colCount * (itemWidth + spacing) - spacing}px`;
   };
@@ -44,15 +46,13 @@
 
 <svelte:window on:resize={handleResize} />
 
-<div bind:this={root}>
-  <div class="container" bind:this={container}>
-    <slot itemClass />
-  </div>
+<div class="container" bind:this={container}>
+  <slot itemClass />
 </div>
 
 <style lang="scss">
   .container {
     position: relative;
-    margin: 0 auto;
+    margin-bottom: spacing(2);
   }
 </style>

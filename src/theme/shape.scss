@@ -1,5 +1,7 @@
 @function spacing($size) {
-  @return $size * 4px;
+  @return $size * 16px;
 }
 
-$rounded: 8px;
+$border-radius: 8px;
+
+$border-width: 1px;

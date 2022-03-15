@@ -1,16 +1,52 @@
 <script lang="ts">
-  import Note from '../components/Note/Note.svelte';
+  import Note from '../components/Note.svelte';
 
-  import Masonry from '../components/Masonry/Masonry.svelte';
+  import Masonry from '../components/Masonry.svelte';
   import CreatePost from '../components/CreatePost.svelte';
   import notes from '../store/notes';
+  import PinIcon from '../assets/PinIcon.svelte';
+
+  const togglePinned = (index: number) => {
+    notes.update((notes) => {
+      const note = notes[index];
+      return [
+        ...notes.slice(0, index),
+        { ...note, pinned: !note.pinned },
+        ...notes.slice(index + 1),
+      ];
+    });
+  };
 </script>
 
 <div style="margin: 32px 64px" class="root">
   <CreatePost />
+  <!-- Pinned Notes -->
+  {#if $notes.some((n) => n.pinned)}
+    <h2 class="section-header">Pinned</h2>
+    <Masonry>
+      {#each $notes as note, index (note.createdAt)}
+        {#if note.pinned}
+          <Note togglePinned={() => togglePinned(index)} {note} />
+        {/if}
+      {/each}
+    </Masonry>
+    <h2 class="section-header">Other</h2>
+  {/if}
+  <!-- Regular Notes -->
   <Masonry>
-    {#each $notes as note (note.createdAt)}
-      <Note {note} />
+    {#each $notes as note, index (note.createdAt)}
+      {#if !note.pinned}
+        <Note togglePinned={() => togglePinned(index)} {note} />
+      {/if}
     {/each}
   </Masonry>
 </div>
+
+<style lang="scss">
+  .section-header {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: $text-muted;
+    text-transform: uppercase;
+  }
+</style>
