@@ -1,5 +1,15 @@
 <script lang="ts">
-  import Post from '../components/Post.svelte';
+  import Note from '../components/Note/index.svelte';
+  import Masonry from '../components/Masonry/index.svelte';
 </script>
 
-<Post content="3" title="post title" />
+<div style="margin: 32px 64px" class="root">
+  <Masonry>
+    {#each new Array(10).fill(0).map((_, i) => i) as i}
+      <Note><b>{i}</b></Note>
+    {/each}
+  </Masonry>
+</div>
+
+<style lang="scss">
+</style>
