@@ -6,6 +6,8 @@
   import notes from '../store/notes';
   import PinIcon from '../assets/PinIcon.svelte';
 
+  let root: HTMLElement;
+
   const togglePinned = (index: number) => {
     notes.update((notes) => {
       const note = notes[index];
@@ -18,32 +20,40 @@
   };
 </script>
 
-<div style="margin: 32px 64px" class="root">
+<div style="margin: 32px 64px" class="root" bind:this={root}>
   <CreatePost />
-  <!-- Pinned Notes -->
-  {#if $notes.some((n) => n.pinned)}
-    <h2 class="section-header">Pinned</h2>
-    <Masonry>
+  <div class="container">
+    <!-- Pinned Notes -->
+    {#if $notes.some((n) => n.pinned)}
+      <h2 class="section-header">Pinned</h2>
+      <Masonry container={root}>
+        {#each $notes as note, index (note.createdAt)}
+          {#if note.pinned}
+            <Note togglePinned={() => togglePinned(index)} {note} />
+          {/if}
+        {/each}
+      </Masonry>
+      <h2 class="section-header">Other</h2>
+    {/if}
+    <!-- Regular Notes -->
+    <Masonry container={root}>
       {#each $notes as note, index (note.createdAt)}
-        {#if note.pinned}
+        {#if !note.pinned}
           <Note togglePinned={() => togglePinned(index)} {note} />
         {/if}
       {/each}
     </Masonry>
-    <h2 class="section-header">Other</h2>
-  {/if}
-  <!-- Regular Notes -->
-  <Masonry>
-    {#each $notes as note, index (note.createdAt)}
-      {#if !note.pinned}
-        <Note togglePinned={() => togglePinned(index)} {note} />
-      {/if}
-    {/each}
-  </Masonry>
+  </div>
 </div>
 
 <style lang="scss">
+  .container {
+    margin: 0 auto;
+    width: min-content;
+  }
+
   .section-header {
+    margin-bottom: spacing(1);
     font-size: 0.825rem;
     font-weight: 600;
     color: $text-muted;

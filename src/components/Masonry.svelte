@@ -3,17 +3,17 @@
 
   export let spacing = 16;
   export let itemWidth = 240;
+  export let container: HTMLElement;
 
-  // let root: HTMLDivElement;
-  let container: HTMLDivElement;
+  let root: HTMLDivElement;
 
   let colCount: number;
 
   const positionItems = (columnCount: number) => {
-    if (!container) return;
-    const columnHeights = new Array(columnCount).fill(0);
+    if (!root) return;
+    const columnHeights = new Array(columnCount).fill(-spacing);
 
-    container.childNodes.forEach((child: HTMLElement) => {
+    root.childNodes.forEach((child: HTMLElement, index) => {
       // Choose the column with the lowest height
       const columnIndex = columnHeights.indexOf(Math.min(...columnHeights));
 
@@ -22,31 +22,41 @@
 
       if (child.style && child.getBoundingClientRect) {
         child.style.transform = `translate(${hOffset}px, ${yOffset}px)`;
-        child.style.width = `${itemWidth}px`;
+        child.style.width =
+          colCount === 1 ? `${container.getBoundingClientRect().width}px` : `${itemWidth}px`;
         // Increment the height of that column
         const height = child.getBoundingClientRect().height;
         columnHeights[columnIndex] += height + spacing;
 
-        container.style.height = `${Math.max(...columnHeights)}px`;
+        root.style.height = `${Math.max(...columnHeights)}px`;
       }
     });
   };
 
   const handleResize = () => {
-    const width = container.parentElement.getBoundingClientRect().width;
-    colCount = Math.floor(width / (itemWidth + spacing));
-    container.style.width = `${colCount * (itemWidth + spacing) - spacing}px`;
+    if (container && root) {
+      const width = container.getBoundingClientRect().width;
+      colCount = Math.floor(width / (itemWidth + spacing));
+      if (colCount === 1) {
+        root.style.width = `${width}px`;
+      } else {
+        root.style.width = `${colCount * (itemWidth + spacing) - spacing}px`;
+      }
+    }
   };
 
   $: positionItems(colCount);
+  $: ((_: HTMLElement) => {
+    handleResize();
+  })(container);
 
   onMount(handleResize);
+
   afterUpdate(() => positionItems(colCount));
 </script>
 
 <svelte:window on:resize={handleResize} />
-
-<div class="container" bind:this={container}>
+<div class="container" bind:this={root}>
   <slot itemClass />
 </div>
 

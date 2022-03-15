@@ -1,5 +1,4 @@
 <script lang="ts">
-  import PinFilled from '../assets/PinIcon.svelte';
   import type { Note } from 'src/store/notes';
   import PinIcon from '../assets/PinIcon.svelte';
   export let note: Note;
