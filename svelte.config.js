@@ -12,7 +12,14 @@ const config = {
   }),
 
   kit: {
-    adapter: adapter({ out: 'build' }),
+    prerender: {
+      default: true,
+    },
+    adapter: adapter({
+      pages: 'build',
+      assets: 'build',
+      fallback: null,
+    }),
   },
 };
 
