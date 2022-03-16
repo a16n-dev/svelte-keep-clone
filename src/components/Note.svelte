@@ -1,22 +1,47 @@
 <script lang="ts">
   import Trash from '../assets/Trash.svelte';
-  import type { Note } from '../store/notes';
+  import { NoteStatus, type NoteType } from '../store/notes';
   import PinIcon from '../assets/PinIcon.svelte';
   import IconButton from './IconButton.svelte';
   import Color from '../assets/Color.svelte';
   import Archive from '../assets/Archive.svelte';
+  import PermanentDelete from '../assets/PermanentDelete.svelte';
+  import RestoreDeleted from '../assets/RestoreDeleted.svelte';
 
   // Props
-  export let note: Note;
-  export let togglePinned: () => void;
+  export let note: NoteType;
+  export let updateNote: (note: NoteType | null) => void;
 
-  // let isHovered: boolean = false;
+  const togglePinned = () => {
+    updateNote({
+      ...note,
+      status: note.status === NoteStatus.PINNED ? NoteStatus.DEFAULT : NoteStatus.PINNED,
+    });
+  };
+
+  const deleteNote = () => {
+    updateNote({ ...note, status: NoteStatus.DELETED });
+  };
+
+  const archiveNote = () => {
+    updateNote({ ...note, status: NoteStatus.ARCHIVED });
+  };
+
+  const permanentlyDeleteNote = () => {
+    updateNote(null);
+  };
+
+  const restoreNote = () => {
+    updateNote({ ...note, status: NoteStatus.DEFAULT });
+  };
 </script>
 
 <div class="root">
-  <button class="pin-button hover-visible" on:click={togglePinned}
-    ><PinIcon filled={note.pinned} size={18} /></button
-  >
+  {#if note.status === NoteStatus.DEFAULT || note.status === NoteStatus.PINNED}
+    <button class="pin-button hover-visible" on:click={togglePinned}
+      ><PinIcon filled={note.status === NoteStatus.PINNED} size={18} />
+    </button>
+  {/if}
   {#if note.title}
     <h4 class="title">{note.title}</h4>
   {/if}
@@ -24,15 +49,28 @@
     <p class="content">{note.content}</p>
   {/if}
   <div class="icon-bar hover-visible">
-    <IconButton>
-      <Color size={18} />
-    </IconButton>
-    <IconButton>
-      <Archive size={18} />
-    </IconButton>
-    <IconButton>
-      <Trash size={18} />
-    </IconButton>
+    {#if note.status === NoteStatus.DELETED}
+      <IconButton on:click={permanentlyDeleteNote}>
+        <PermanentDelete size={18} />
+      </IconButton>
+      <IconButton on:click={restoreNote}>
+        <RestoreDeleted size={18} />
+      </IconButton>
+    {:else if note.status === NoteStatus.ARCHIVED}
+      <IconButton on:click={restoreNote}>
+        <Archive size={18} />
+      </IconButton>
+    {:else}
+      <IconButton>
+        <Color size={18} />
+      </IconButton>
+      <IconButton on:click={archiveNote}>
+        <Archive size={18} />
+      </IconButton>
+      <IconButton on:click={deleteNote}>
+        <Trash size={18} />
+      </IconButton>
+    {/if}
   </div>
 </div>
 

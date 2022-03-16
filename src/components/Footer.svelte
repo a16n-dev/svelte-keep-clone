@@ -19,6 +19,7 @@
 
 <style lang="scss">
   .root {
+    margin-left: $sidebar-width;
     color: $text-muted;
     font-size: 0.875rem;
   }

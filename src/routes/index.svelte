@@ -3,7 +3,7 @@
 
   import Masonry from '../components/Masonry.svelte';
   import CreatePost from '../components/CreatePost.svelte';
-  import notes from '../store/notes';
+  import notes, { NoteStatus, updateNoteAtIndex, type NoteType } from '../store/notes';
   import { onMount } from 'svelte';
   import Container from '../components/Container.svelte';
 
@@ -11,19 +11,12 @@
 
   let loaded = false;
 
-  const togglePinned = (index: number) => {
-    notes.update((notes) => {
-      const note = notes[index];
-      return [
-        ...notes.slice(0, index),
-        { ...note, pinned: !note.pinned },
-        ...notes.slice(index + 1),
-      ];
-    });
-  };
-
   onMount(() => (loaded = true));
 </script>
+
+<svelte:head>
+  <title>Notes App</title>
+</svelte:head>
 
 <Container>
   <div class="root" bind:this={root}>
@@ -31,12 +24,12 @@
     {#if loaded}
       <div class="container">
         <!-- Pinned Notes -->
-        {#if $notes.some((n) => n.pinned)}
+        {#if $notes.some((n) => n.status === NoteStatus.PINNED)}
           <h2 class="section-header">Pinned</h2>
           <Masonry container={root}>
             {#each $notes as note, index (note.createdAt)}
-              {#if note.pinned}
-                <Note togglePinned={() => togglePinned(index)} {note} />
+              {#if note.status === NoteStatus.PINNED}
+                <Note updateNote={(note) => updateNoteAtIndex(index, note)} {note} />
               {/if}
             {/each}
           </Masonry>
@@ -45,8 +38,8 @@
         <!-- Regular Notes -->
         <Masonry container={root}>
           {#each $notes as note, index (note.createdAt)}
-            {#if !note.pinned}
-              <Note togglePinned={() => togglePinned(index)} {note} />
+            {#if note.status === NoteStatus.DEFAULT}
+              <Note updateNote={(note) => updateNoteAtIndex(index, note)} {note} />
             {/if}
           {/each}
         </Masonry>

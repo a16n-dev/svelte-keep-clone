@@ -1,18 +1,25 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/env';
 
-export interface Note {
+export interface NoteType {
   title?: string;
   content: string;
   createdAt: number;
-  pinned?: boolean;
+  status: NoteStatus;
+}
+
+export enum NoteStatus {
+  DEFAULT,
+  PINNED,
+  DELETED,
+  ARCHIVED,
 }
 
 /**
  * Store for notes
  */
 
-type NotesStore = Note[];
+type NotesStore = NoteType[];
 
 const storageKey = 'notes';
 
@@ -27,6 +34,16 @@ notes.subscribe((value) => {
 export const clearNotes = () => {
   notes.set([]);
   localStorage.removeItem('notes');
+};
+
+export const updateNoteAtIndex = (index: number, note: NoteType | null) => {
+  notes.update((notes) => {
+    if (note) {
+      return [...notes.slice(0, index), note, ...notes.slice(index + 1)];
+    } else {
+      return [...notes.slice(0, index), ...notes.slice(index + 1)];
+    }
+  });
 };
 
 export default notes;

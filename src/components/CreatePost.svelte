@@ -1,5 +1,5 @@
 <script lang="ts">
-  import notes from '../store/notes';
+  import notes, { NoteStatus } from '../store/notes';
 
   import { onMount } from 'svelte';
 
@@ -20,7 +20,10 @@
     const content = data.get('content').toString().trim() || undefined;
 
     if (content || title) {
-      notes.update((notes) => [{ content, title, createdAt: Date.now() }, ...notes]);
+      notes.update((notes) => [
+        { content, title, createdAt: Date.now(), status: NoteStatus.DEFAULT },
+        ...notes,
+      ]);
     }
 
     form.reset();
@@ -42,15 +45,7 @@
 
 <svelte:window on:click={detectFocus} />
 
-<form
-  class="root"
-  bind:this={form}
-  tabindex="0"
-  on:submit={(e) => {
-    e.preventDefault();
-    createPost();
-  }}
->
+<form class="root" bind:this={form} tabindex="0" on:submit|preventDefault>
   {#if expanded}
     <input class="title-input" name="title" placeholder="Title" />
   {/if}
@@ -74,7 +69,7 @@
     border: $border-width solid $outline;
     border-radius: $border-radius;
     margin-bottom: spacing(4);
-    margin-top: spacing(3);
+    margin-top: spacing(2);
   }
 
   .title-input {

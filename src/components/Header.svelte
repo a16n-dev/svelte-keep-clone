@@ -4,12 +4,8 @@
 </script>
 
 <header class="root">
-  <Container>
-    <div class="header">
-      <div class="logo"><Logo size={32} /></div>
-      <div class="title">Notes App</div>
-    </div>
-  </Container>
+  <div class="logo"><Logo size={32} /></div>
+  <div class="title">Notes App</div>
 </header>
 
 <style lang="scss">
@@ -17,13 +13,10 @@
     position: sticky;
     top: 0;
     width: 100%;
-    padding: spacing(1);
+    padding: spacing(1) spacing(2);
     border-bottom: $border-width solid $outline;
     background: $background;
     z-index: 100;
-  }
-
-  .header {
     display: flex;
     align-items: center;
   }

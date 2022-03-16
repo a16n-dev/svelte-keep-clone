@@ -11,6 +11,10 @@ const config = {
     },
   }),
 
+  paths: {
+    base: '/svelte-keep-clone',
+  },
+
   kit: {
     paths: {
       base: '/svelte-keep-clone',

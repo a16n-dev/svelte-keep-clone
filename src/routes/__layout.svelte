@@ -1,12 +1,16 @@
 <script>
+  import Sidebar from '../components/Sidebar.svelte';
   import Footer from '../components/Footer.svelte';
   import Header from '../components/Header.svelte';
 </script>
 
 <div class="root">
   <Header />
-  <div class="content">
-    <slot />
+  <div class="content-outer-wrapper">
+    <Sidebar />
+    <div class="content-inner-wrapper">
+      <slot />
+    </div>
   </div>
   <Footer />
 </div>
@@ -21,7 +25,13 @@
     height: 100vh;
   }
 
-  .content {
+  .content-outer-wrapper {
+    margin-top: spacing(1);
+    display: flex;
+    flex-grow: 1;
+  }
+
+  .content-inner-wrapper {
     flex-grow: 1;
   }
 </style>
