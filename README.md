@@ -4,7 +4,7 @@
 <h1><b>Google Keep Clone</b></h1>
   Built with <a href="https://kit.svelte.dev/">SvelteKit</a> & <a href="https://www.typescriptlang.org/">TypeScript</a>
   <br/>  <br/><br/>
-  Take me to the <a href="https://alexn400.github.io/svelte-keep-clone/">✨Demo✨</a>
+  Take me to the <a target="_blank" href="https://alexn400.github.io/svelte-keep-clone/">✨Demo✨</a>
 </div>
 
 
