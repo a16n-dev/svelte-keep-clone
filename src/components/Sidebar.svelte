@@ -14,6 +14,9 @@
 
 <style lang="scss">
   .root {
+    position: sticky;
+    top: $header-height + spacing(1);
+    height: min-content;
     display: flex;
     flex-direction: column;
     width: $sidebar-width;

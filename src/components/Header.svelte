@@ -13,6 +13,7 @@
     position: sticky;
     top: 0;
     width: 100%;
+    height: $header-height;
     padding: spacing(1) spacing(2);
     border-bottom: $border-width solid $outline;
     background: $background;
