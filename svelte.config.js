@@ -10,10 +10,11 @@ const config = {
       prependData: `@import './src/theme/variables.scss';`,
     },
   }),
-  paths: {
-    base: '/svelte-keep-clone',
-  },
+
   kit: {
+    paths: {
+      base: '/svelte-keep-clone',
+    },
     trailingSlash: 'always',
     prerender: {
       default: true,
