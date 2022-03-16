@@ -1,5 +1,6 @@
 <script>
   import Container from './Container.svelte';
+  import { clearNotes } from '../store/notes';
 </script>
 
 <footer class="root">
@@ -9,7 +10,9 @@
       <div>•</div>
       <a href="https://github.com/alexn400/svelte-keep-clone" target="_blank">Github</a>
       <div class="grow" />
-      <button class="button">Delete data</button>
+      <button on:click={clearNotes} class="button"
+        >Clear LocalStorage data (Deletes all notes)</button
+      >
     </div>
   </Container>
 </footer>
@@ -35,7 +38,7 @@
 
   .button {
     background: none;
-    color: $primary;
+    color: $text-muted;
     border-radius: $border-radius;
     padding: spacing(0.5) spacing(1);
     transition: background 0.2s ease;

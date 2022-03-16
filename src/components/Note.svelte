@@ -3,6 +3,8 @@
   import type { Note } from '../store/notes';
   import PinIcon from '../assets/PinIcon.svelte';
   import IconButton from './IconButton.svelte';
+  import Color from '../assets/Color.svelte';
+  import Archive from '../assets/Archive.svelte';
 
   // Props
   export let note: Note;
@@ -21,7 +23,13 @@
   {#if note.content}
     <p class="content">{note.content}</p>
   {/if}
-  <div class="icon-bar">
+  <div class="icon-bar hover-visible">
+    <IconButton>
+      <Color size={18} />
+    </IconButton>
+    <IconButton>
+      <Archive size={18} />
+    </IconButton>
     <IconButton>
       <Trash size={18} />
     </IconButton>
@@ -29,7 +37,6 @@
 </div>
 
 <style lang="scss">
-  $side-margin: 1.25;
   $x-margin: 0.75;
 
   .root {
@@ -39,7 +46,7 @@
     border: $border-width solid $outline;
     border-radius: $border-radius;
     padding: spacing(1) spacing($x-margin) spacing(0.25) spacing($x-margin);
-    padding-right: spacing($side-margin + $x-margin);
+    padding-right: spacing($x-margin);
     transition: transform 0.3s ease;
 
     &:focus-visible {
@@ -64,6 +71,7 @@
   }
 
   .title {
+    margin-right: spacing(1);
     margin-bottom: spacing(0.5);
     font-size: large;
     font-weight: 500;
@@ -88,9 +96,7 @@
 
   .icon-bar {
     display: flex;
-    border-top: $border-width solid $outline;
-    margin-top: spacing(1);
-    margin-right: spacing(-$side-margin);
+    margin: 0 spacing(-0.5);
     padding-top: spacing(0.25);
   }
 </style>

@@ -6,10 +6,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
+    width: 32px;
     padding: spacing(0.25);
-    height: 24px;
+    height: 32px;
     color: $text;
     border-radius: 9999px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.12);
+    }
   }
 </style>

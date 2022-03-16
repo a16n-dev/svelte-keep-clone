@@ -23,4 +23,10 @@ const notes = writable(defaultValue);
 notes.subscribe((value) => {
   if (browser) localStorage.setItem(storageKey, JSON.stringify(value));
 });
+
+export const clearNotes = () => {
+  notes.set([]);
+  localStorage.removeItem('notes');
+};
+
 export default notes;
