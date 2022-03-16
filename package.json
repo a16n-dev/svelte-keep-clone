@@ -1,6 +1,7 @@
 {
   "name": "my-app",
   "version": "0.0.1",
+  "basePath": "/",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -24,6 +25,7 @@
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.5.0",
     "sass": "^1.49.9",
+    "serve": "^13.0.2",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.10.4",
