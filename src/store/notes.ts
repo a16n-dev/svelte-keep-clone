@@ -6,6 +6,7 @@ export interface NoteType {
   content: string;
   createdAt: number;
   status: NoteStatus;
+  color?: string;
 }
 
 export enum NoteStatus {

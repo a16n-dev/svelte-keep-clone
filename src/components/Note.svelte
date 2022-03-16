@@ -34,9 +34,13 @@
   const restoreNote = () => {
     updateNote({ ...note, status: NoteStatus.DEFAULT });
   };
+
+  const setNoteColor = () => {
+    updateNote({ ...note, color: '#2F4439' });
+  };
 </script>
 
-<div class="root">
+<div class="root" style={note.color ? `--bg-color: ${note.color}` : ''}>
   {#if note.status === NoteStatus.DEFAULT || note.status === NoteStatus.PINNED}
     <button class="pin-button hover-visible" on:click={togglePinned}
       ><PinIcon filled={note.status === NoteStatus.PINNED} size={18} />
@@ -61,7 +65,7 @@
         <Archive size={18} />
       </IconButton>
     {:else}
-      <IconButton>
+      <IconButton on:click={setNoteColor}>
         <Color size={18} />
       </IconButton>
       <IconButton on:click={archiveNote}>
@@ -78,8 +82,9 @@
   $x-margin: 0.75;
 
   .root {
+    --bg-color: #{$surface};
     position: absolute;
-    background: $surface;
+    background: var(--bg-color);
     flex-grow: 1;
     border: $border-width solid $outline;
     border-radius: $border-radius;
