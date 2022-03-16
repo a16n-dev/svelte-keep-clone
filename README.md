@@ -30,7 +30,7 @@ yarn dev
 yarn dev -- --open
 ```
 
-## Builds
+## 🏗 Builds
 
 To create a production build:
 
@@ -39,3 +39,6 @@ yarn build
 ```
 
 You can then preview the production build with `yarn preview`.
+
+## Licenses
+MIT Licensed. Copyright (c) Alexander Nicholson 2021.
