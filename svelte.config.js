@@ -12,6 +12,7 @@ const config = {
   }),
 
   kit: {
+    trailingSlash: 'always',
     prerender: {
       default: true,
     },
