@@ -41,4 +41,4 @@ yarn build
 You can then preview the production build with `yarn preview`.
 
 ## Licenses
-MIT Licensed. Copyright (c) Alexander Nicholson 2021.
+MIT Licensed. Copyright (c) Alexander Nicholson 2022.
