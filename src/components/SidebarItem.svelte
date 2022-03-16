@@ -8,7 +8,7 @@
   const active = browser && `${base}${href}/` === location.pathname;
 </script>
 
-<a class="root" class:active rel="external" href={`${base}${href}`}>
+<a class="root" sveltekit:prefetch class:active rel="external" href={`${base}${href}`}>
   <slot />
   <div class="label">{label}</div>
 </a>

@@ -12,6 +12,10 @@
   onMount(() => (loaded = true));
 </script>
 
+<svelte:head>
+  <title>Archived Notes</title>
+</svelte:head>
+
 <Container>
   <div class="root" bind:this={root}>
     {#if loaded}
