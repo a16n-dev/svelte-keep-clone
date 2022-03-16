@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { afterUpdate, beforeUpdate, onMount } from 'svelte';
+  import { afterUpdate, onMount } from 'svelte';
 
   export let spacing = 16;
   export let itemWidth = 240;
@@ -11,6 +11,7 @@
 
   const positionItems = (columnCount: number) => {
     if (!root) return;
+
     const columnHeights = new Array(columnCount).fill(-spacing);
 
     root.childNodes.forEach((child: HTMLElement, index) => {
@@ -44,11 +45,6 @@
       }
     }
   };
-
-  $: positionItems(colCount);
-  $: ((_: HTMLElement) => {
-    handleResize();
-  })(container);
 
   onMount(handleResize);
 

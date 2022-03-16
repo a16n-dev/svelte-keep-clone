@@ -1,38 +1,50 @@
-* {
-  font-family: 'Open Sans', sans-serif;
-}
+:global {
+  * {
+    font-family: 'Open Sans', sans-serif;
+  }
 
-input,
-textarea {
-  background: none;
-  outline: none;
-  font-size: 1rem;
-}
+  body {
+    background: $background;
+    color: $text;
+  }
 
-button {
-  border: none;
-  outline: none;
-  padding: 0;
-  cursor: pointer;
-}
+  html {
+    height: 100%;
+  }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-input,
-textarea {
-  box-sizing: border-box;
-  border: none;
-  padding: 0;
-  margin: 0;
-}
+  input,
+  textarea {
+    background: none;
+    outline: none;
+    font-size: 1rem;
+  }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+  button {
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  input,
+  body,
+  textarea {
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 }

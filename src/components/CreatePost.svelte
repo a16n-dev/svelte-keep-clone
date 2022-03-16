@@ -74,6 +74,7 @@
     border: $border-width solid $outline;
     border-radius: $border-radius;
     margin-bottom: spacing(4);
+    margin-top: spacing(3);
   }
 
   .title-input {

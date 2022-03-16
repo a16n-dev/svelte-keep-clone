@@ -4,9 +4,12 @@
   import Masonry from '../components/Masonry.svelte';
   import CreatePost from '../components/CreatePost.svelte';
   import notes from '../store/notes';
-  import PinIcon from '../assets/PinIcon.svelte';
+  import { onMount } from 'svelte';
+  import Container from '../components/Container.svelte';
 
   let root: HTMLElement;
+
+  let loaded = false;
 
   const togglePinned = (index: number) => {
     notes.update((notes) => {
@@ -18,33 +21,39 @@
       ];
     });
   };
+
+  onMount(() => (loaded = true));
 </script>
 
-<div style="margin: 32px 64px" class="root" bind:this={root}>
-  <CreatePost />
-  <div class="container">
-    <!-- Pinned Notes -->
-    {#if $notes.some((n) => n.pinned)}
-      <h2 class="section-header">Pinned</h2>
-      <Masonry container={root}>
-        {#each $notes as note, index (note.createdAt)}
-          {#if note.pinned}
-            <Note togglePinned={() => togglePinned(index)} {note} />
-          {/if}
-        {/each}
-      </Masonry>
-      <h2 class="section-header">Other</h2>
-    {/if}
-    <!-- Regular Notes -->
-    <Masonry container={root}>
-      {#each $notes as note, index (note.createdAt)}
-        {#if !note.pinned}
-          <Note togglePinned={() => togglePinned(index)} {note} />
+<Container>
+  <div class="root" bind:this={root}>
+    <CreatePost />
+    {#if loaded}
+      <div class="container">
+        <!-- Pinned Notes -->
+        {#if $notes.some((n) => n.pinned)}
+          <h2 class="section-header">Pinned</h2>
+          <Masonry container={root}>
+            {#each $notes as note, index (note.createdAt)}
+              {#if note.pinned}
+                <Note togglePinned={() => togglePinned(index)} {note} />
+              {/if}
+            {/each}
+          </Masonry>
+          <h2 class="section-header">Other</h2>
         {/if}
-      {/each}
-    </Masonry>
+        <!-- Regular Notes -->
+        <Masonry container={root}>
+          {#each $notes as note, index (note.createdAt)}
+            {#if !note.pinned}
+              <Note togglePinned={() => togglePinned(index)} {note} />
+            {/if}
+          {/each}
+        </Masonry>
+      </div>
+    {/if}
   </div>
-</div>
+</Container>
 
 <style lang="scss">
   .container {

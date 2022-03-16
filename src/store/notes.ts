@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { browser } from '$app/env';
 
 export interface Note {
   title?: string;
@@ -13,7 +14,13 @@ export interface Note {
 
 type NotesStore = Note[];
 
-const defaultValue: NotesStore = [];
+const storageKey = 'notes';
+
+const defaultValue: NotesStore = browser ? JSON.parse(localStorage.getItem(storageKey)) ?? [] : [];
 
 const notes = writable(defaultValue);
+
+notes.subscribe((value) => {
+  if (browser) localStorage.setItem(storageKey, JSON.stringify(value));
+});
 export default notes;
