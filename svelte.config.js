@@ -10,7 +10,9 @@ const config = {
       prependData: `@import './src/theme/variables.scss';`,
     },
   }),
-
+  paths: {
+    base: '.',
+  },
   kit: {
     trailingSlash: 'always',
     prerender: {
