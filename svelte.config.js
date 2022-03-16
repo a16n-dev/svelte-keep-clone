@@ -11,7 +11,8 @@ const config = {
     },
   }),
   paths: {
-    base: '.',
+    base: 'svelte-keep-clone',
+    assets: 'svelte-keep-clone',
   },
   kit: {
     trailingSlash: 'always',
