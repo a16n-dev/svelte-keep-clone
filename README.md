@@ -7,6 +7,9 @@
   Take me to the <a target="_blank" href="https://alexn400.github.io/svelte-keep-clone/">✨Demo✨</a>
 </div>
 
+<br/>
+
+![image](https://user-images.githubusercontent.com/39721828/169023127-1e9c8531-f80f-4357-8e64-ab4d835c8d99.png)
 
 
 ## ℹ About
